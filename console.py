@@ -43,7 +43,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, line):
         """Creates a new instance of BaseModel, saves it and prints the id"""
-        args = split(line, " ")
+        args = line.split(" ")
         if not line:
             print("** class name missing **")
         elif args[0] not in self.__classes:
@@ -102,20 +102,21 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, line):
         """Prints all string representation of all instances"""
-        if not line:
-            o = storage.all()
-            print([o[k].__str__() for k in o])
-            return
-        try:
-            args = line.split(" ")
-            if args[0] not in self.__classes:
-                raise NameError()
+        my_list = []
 
-            o = storage.all(eval(args[0]))
-            print([o[k].__str__() for k in o])
+        if line:
+            line = line.split(' ')[0]
+            if line not in self.__classes:
+                print("** class doesn't exist **")
+                return
+            for k, v in storage.all().items():
+                if k.split('.')[0] == line:
+                    my_list.append(str(v))
+        else:
+            for k, v in storage.all().items():
+                my_list.append(str(v))
 
-        except NameError:
-            print("** class doesn't exist **")
+        print(my_list)
 
     def do_update(self, line):
         """Updates an instance based on the class name and id"""
@@ -206,3 +207,7 @@ class HBNBCommand(cmd.Cmd):
                     self.do_update(args)
         else:
             cmd.Cmd.default(self, line)
+
+
+if __name__ == "__main__":
+    HBNBCommand().cmdloop()
