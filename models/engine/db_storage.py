@@ -14,12 +14,8 @@ from models.user import User
 import os
 
 CLASSES = {
-    'Amenity': Amenity,
     'City': City,
-    'Place': Place,
     'State': State,
-    'Review': Review,
-    'User': User
 }
 
 
