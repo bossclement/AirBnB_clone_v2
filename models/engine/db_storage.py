@@ -15,7 +15,10 @@ import os
 
 CLASSES = {
     'City': City,
+    'Place': Place,
     'State': State,
+    'Review': Review,
+    'User': User
 }
 
 
@@ -49,8 +52,11 @@ class DBStorage:
                 objs[obj.__class__.__name__ + '.' + obj.id] = obj
         else:
             for cls in CLASSES.values():
-                for obj in self.__session.query(cls):
-                    objs[obj.__class__.__name__ + '.' + obj.id] = obj
+                try:
+                    for obj in self.__session.query(cls):
+                        objs[obj.__class__.__name__ + '.' + obj.id] = obj
+                except:
+                    continue
         return objs
     
     def reload(self):
