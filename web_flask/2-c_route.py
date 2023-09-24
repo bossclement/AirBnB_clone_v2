@@ -16,7 +16,7 @@ def hbnb():
     return "HBNB"
 
 
-@app.route("/c/<text>")
+@app.route("/c/<text>", strict_slashes=False)
 def text(text):
     """Displays c followed with text stored in text variable"""
     return "C {}".format(text.replace("_", " "))
