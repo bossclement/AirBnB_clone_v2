@@ -29,10 +29,11 @@ def python(text):
     return "Python {}".format(text.replace("_", " "))
 
 
-@app.route("/number/<n>")
+@app.route("/number/<n>", strict_slashes=False)
 def number(n):
     """Displays n if it's a number"""
-    return "{} is a number".format(n)
+    if isinstance(n, int):
+        return "{} is a number".format(n)
 
 
 if __name__ == "__main__":
