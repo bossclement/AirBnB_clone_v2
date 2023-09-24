@@ -1,31 +1,23 @@
 #!/usr/bin/python3
-"""User class model"""
+""" holds class User"""
+import models
 from models.base_model import BaseModel, Base
 from os import getenv
-from sqlalchemy.orm import relationship
+import sqlalchemy
 from sqlalchemy import Column, String
+from sqlalchemy.orm import relationship
 
 
 class User(BaseModel, Base):
-    """User class definition
-
-    Attrs:
-        email (str): email person
-        password (str): password string
-        first_name (str): first name string
-        last_name (str): last name string
-    """
-    if getenv('HBNB_TYPE_STORAGE') == 'db':
+    """Representation of a user """
+    if models.storage_t == 'db':
         __tablename__ = 'users'
-        email = Column(String(128),
-                       nullable=False)
-        password = Column('password',
-                           String(128),
-                           nullable=False)
-        first_name = Column(String(128),
-                            nullable=True)
-        last_name = Column(String(128),
-                           nullable=True)
+        email = Column(String(128), nullable=False)
+        password = Column(String(128), nullable=False)
+        first_name = Column(String(128), nullable=True)
+        last_name = Column(String(128), nullable=True)
+        places = relationship("Place", backref="user")
+        reviews = relationship("Review", backref="user")
     else:
         email = ""
         password = ""
